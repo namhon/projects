@@ -103,6 +103,18 @@ h1 {
     display: inline-block;
 }
 
+.score-panel .stars_li {
+    list-style: none;
+    display: inline-block;
+}
+
+.score-panel .stars_li.close {
+    list-style: none;
+    display: inline-block;
+    background: black;
+    
+}
+
 .score-panel .restart {
     float: right;
     cursor: pointer;

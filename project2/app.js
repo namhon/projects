@@ -40,7 +40,7 @@ let allCards = [...document.querySelectorAll('.card')];
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -78,7 +78,7 @@ for (let card of allCards) {
             arr_Card.push(card);
             count++;
             upCount(count);
-
+            removeStarCount(count);
             if (arr_Card.length <= 2){
                 card.classList.add('open', 'show');
         
@@ -90,7 +90,7 @@ for (let card of allCards) {
                             arr_Card[i].classList.remove('open', 'show');
                             arr_Card[i].classList.add('match');
                             scoreCount++;
-                            finalScore(scoreCount);
+                            setTimeout(finalScore, 400, scoreCount, count);
                         }
                         arr_Card = [];
 
@@ -108,10 +108,16 @@ for (let card of allCards) {
 };
 
 //display final scores when the game is over
-function finalScore(fCount){
+function finalScore(fCount, count){
     if (fCount == allCards.length){
+        let gameTime = stopTime();
         fCount_display = fCount / 2;
-        alert("Congratulation! You got all scores! " + fCount_display + " matches!");
+        let result = removeStarCount(count);
+        let press = confirm(`Congratulation! You got all scores with ${fCount_display} matches! \n ${result} Star(s) achieved in ${gameTime} time.
+        \n Press Ok for Play Again!`);
+            if (press == true){
+                reStartGame();
+            }
     }
 }
 
@@ -135,28 +141,73 @@ function matchCard(array) {
    }
 };
 
-//restart
+//restart click
 let restartBtn = document.querySelector('.restart');
 restartBtn.addEventListener("click", function(e){      
-    reStartGame(allCards);
+    reStartGame();
 });
 
-function reStartGame(cards){
+// restart function
+function reStartGame(){
     count = 0;
     //refresh the screen to restart the game
     document.location.reload(true);
-    
-    //update the card status
-    //for(let i = 0; i < cards.length; i++){
-    //    allCards[i].classList.remove('open', 'show', 'match');
-    //}
     
     // change the move count to 0
     upCount(count);
 };
 
 // update the move count
-function upCount (count){
+function upCount(count){
     let count_ = document.getElementsByClassName("moves")[0];
     count_.innerHTML = count;
 };
+
+// remove star depending on the moves
+function removeStarCount(count){
+    let fStar = 5;
+    let star = document.querySelectorAll('.stars_li');
+
+    if (count > 15){
+        star[0].classList.add('close');
+        fStar = 4;
+    }
+    if (count > 25){
+        star[1].classList.add('close');
+        fStar = 3;
+    }
+    if (count > 35){
+        star[2].classList.add('close');
+        fStar = 2;
+    }
+    if (count > 45){
+        star[3].classList.add('close');
+        fStar = 1;
+    }
+    if (count > 55){
+        star[4].classList.add('close');
+        fStar = 0;
+    }
+    return fStar;
+};
+
+// timer
+let second = 0;
+function toStr(time){
+    if(time > 9){
+        return time;
+    } else {
+        return "0" + time;
+    }
+};
+
+countTime = setInterval(function(){
+                    document.getElementById("second").innerHTML = toStr(++second%60);
+                    document.getElementById("minute").innerHTML = toStr(parseInt(second/60));
+                    }, 1000);    
+
+function stopTime(){
+    clearInterval(countTime);
+    console.log("counttime: " + countTime);
+    return countTime;
+}
