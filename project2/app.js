@@ -110,10 +110,9 @@ for (let card of allCards) {
 //display final scores when the game is over
 function finalScore(fCount, count){
     if (fCount == allCards.length){
-        let gameTime = stopTime();
         fCount_display = fCount / 2;
         let result = removeStarCount(count);
-        let press = confirm(`Congratulation! You got all scores with ${fCount_display} matches! \n ${result} Star(s) achieved in ${gameTime} time.
+        let press = confirm(`Congratulation! You got all scores with ${fCount_display} matches! \n ${result} Star(s) achieved in ${cur_Time} time.
         \n Press Ok for Play Again!`);
             if (press == true){
                 reStartGame();
@@ -201,13 +200,10 @@ function toStr(time){
     }
 };
 
+let cur_Time = '';
+
 countTime = setInterval(function(){
                     document.getElementById("second").innerHTML = toStr(++second%60);
                     document.getElementById("minute").innerHTML = toStr(parseInt(second/60));
-                    }, 1000);    
-
-function stopTime(){
-    clearInterval(countTime);
-    console.log("counttime: " + countTime);
-    return countTime;
-}
+                    cur_Time = toStr(parseInt(second/60)) + ':' + toStr(second%60);
+                    }, 1000);
