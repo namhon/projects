@@ -1,9 +1,9 @@
 # memory game -
 
 ## Table of Contents
-how to play
-files
-contributing
+- how to play
+- files
+- contributing
 
 ## how to play:
 
