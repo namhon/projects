@@ -15,10 +15,10 @@
 7. check loadfeed update the new feed properly
 
 ## files:
-- feedreader.js: jasmine spec file
-- app.js: javascript file
+- feedreader.js: jasmin spec file at \jasmine\spec\
+- app.js: javascript file at \js
 - index.html: html file 
-- style.css: css file
+- style.css: css file at \css
 
 ## contributing
 Hon Nam
