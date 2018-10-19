@@ -54,26 +54,35 @@ $(function() {
         });
 
         it('loadFeed works properly', () => {
-            const feed = document.querySelector('.feed');
-            console.log(feed.children.length);
-            expect(feed.children.length > 0).toBe(true);
+            const feed = document.querySelectorAll('.feed .entry');
+            console.log(feed);
+            expect(feed.length > 0).toBe(true);
         });
     });
 
     describe('New Feed Selection', function(){
         // check when a new feed is loaded by the loadFeed function that the content actually changes.
-        // compare feed_0 and feed_1 and check contents are same or not
+        // compare oldFeed and newFeed and check contents are same or not
+        let oldFeed, newFeed;
+
         beforeEach((done) => {
-            loadFeed(0);
-            loadFeed(1, done);
-            //done();
+            loadFeed(0, function(){
+            oldFeed = document.querySelector('.feed');
+            console.log(oldFeed);
+                loadFeed(1, function(){
+                newFeed = document.querySelector('.feed');
+                console.log(newFeed);
+                done();
+                });
+            });
         });
 
+
         it('content changes', function(){
-            const feed = document.querySelector('.feed');
-            //console.log(feed.children[0].innerText);
-            //console.log(feed.children[1].innerText);
-            expect(feed.children[0].innerText === feed.children[1].innerText).toBe(false);
+            //const feed = document.querySelector('.feed');
+            console.log(oldFeed.children[0].innerText);
+            console.log(newFeed.children[1].innerText);
+            expect(oldFeed.children[0].innerText === newFeed.children[1].innerText).toBe(false);
         })
     });
 }());
